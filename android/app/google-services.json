@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "164168013727",
+    "project_id": "lendiel-db1bc",
+    "storage_bucket": "lendiel-db1bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164168013727:android:f5270c1f67c54cb6f18faa",
+        "android_client_info": {
+          "package_name": "ua.lendi.checker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164168013727-d2hjls6cr39hak99gbt684olo598k9a5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1MQGPO-zF6wgCe_v_LmML2aWanQ2tDiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164168013727-d2hjls6cr39hak99gbt684olo598k9a5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
