@@ -1,0 +1,29 @@
+[33mcommit 5edc3d901459e5a15fcc49afaa7c15544a1e72f4[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;33mtag: step-5[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Sasha <lendiel2002@gmail.com>
+Date:   Sat Dec 30 15:25:10 2023 -0500
+
+    step-5
+
+[33mcommit f409e2cd92bd211fc93958fa8f9827b97adc9c10[m
+Author: Sasha <lendiel2002@gmail.com>
+Date:   Fri Dec 29 12:29:16 2023 -0500
+
+    we add notes view
+
+[33mcommit 354cc141e0418f0c8f7bab63012919bae4748d5e[m[33m ([m[1;33mtag: step-3[m[33m)[m
+Author: Sasha <lendiel2002@gmail.com>
+Date:   Wed Dec 27 12:57:49 2023 -0500
+
+    step-3
+
+[33mcommit 22c7340fe1f0e96e0da3c24dbb05686c608a9d8a[m[33m ([m[1;33mtag: step-2[m[33m)[m
+Author: Sasha <lendiel2002@gmail.com>
+Date:   Tue Dec 26 20:40:20 2023 -0500
+
+    separate login and register view
+
+[33mcommit ddb7ffb888b032ba0a514a66e550c97480e411c4[m[33m ([m[1;33mtag: step-1[m[33m)[m
+Author: Sasha <lendiel2002@gmail.com>
+Date:   Thu Oct 26 15:28:46 2023 -0400
+
+    Login and Register views

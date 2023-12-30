@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:checker/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../constants/routes.dart';
+import '../utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -61,15 +64,18 @@ class _RegisterViewState extends State<RegisterView> {
                 final userCredential = await FirebaseAuth.instance
                     .createUserWithEmailAndPassword(
                         email: email.text, password: password.text);
-                // ignore: avoid_print
                 print(userCredential);
               } on FirebaseAuthException catch (e) {
-                if (e.code == 'weak-password') {
-                  // ignore: avoid_print
-                  print("Weak password");
+                if (e.code == 'user-not-found') {
+                  await showErrorDialog(
+                    context,
+                    'User not found',
+                  );
                 } else {
-                  // ignore: avoid_print
-                  print(e);
+                  await showErrorDialog(
+                    context,
+                    e.code,
+                  );
                 }
               }
             },
