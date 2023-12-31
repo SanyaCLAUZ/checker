@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:checker/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:checker/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../constants/routes.dart';
@@ -55,21 +53,31 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           TextButton(
             onPressed: () async {
-              await Firebase.initializeApp(
-                options: DefaultFirebaseOptions.currentPlatform,
-              );
-              final email = _email;
-              final password = _password;
+              final email = _email.text;
+              final password = _password.text;
               try {
-                final userCredential = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: email.text, password: password.text);
-                print(userCredential);
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+                final user = FirebaseAuth.instance.currentUser;
+                user?.sendEmailVerification();
+                Navigator.of(context).pushNamed(verifyEmailRoute);
               } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
+                if (e.code == 'weak-password') {
                   await showErrorDialog(
                     context,
-                    'User not found',
+                    'Weak password',
+                  );
+                } else if (e.code == 'email-already-in-use') {
+                  await showErrorDialog(
+                    context,
+                    e.code,
+                  );
+                } else if (e.code == 'invalid-email') {
+                  await showErrorDialog(
+                    context,
+                    e.code,
                   );
                 } else {
                   await showErrorDialog(
@@ -77,6 +85,11 @@ class _RegisterViewState extends State<RegisterView> {
                     e.code,
                   );
                 }
+              } catch (e) {
+                await showErrorDialog(
+                  context,
+                  e.toString(),
+                );
               }
             },
             child: const Text('Register'),
