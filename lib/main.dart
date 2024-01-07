@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:checker/constants/routes.dart';
 import 'package:checker/firebase_options.dart';
 import 'package:checker/views/login_view.dart';
@@ -97,7 +99,8 @@ class _NotesViewState extends State<NotesView> {
           )
         ],
       ),
-      body: const Text('Hello world'),
+      body: Text(
+          'You are logged in as ${FirebaseAuth.instance.currentUser?.email}'),
     );
   }
 }

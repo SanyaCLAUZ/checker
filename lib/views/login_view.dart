@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:checker/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  bool _passwordVisible = true;
 
   @override
   void initState() {
@@ -29,6 +32,11 @@ class _LoginViewState extends State<LoginView> {
     _email.dispose();
     _password.dispose();
     super.dispose();
+  }
+
+  void _fillTextFields(String e, String p) {
+    _email.text = e;
+    _password.text = p;
   }
 
   @override
@@ -47,9 +55,21 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextField(
             controller: _password,
-            obscureText: true,
+            obscureText: _passwordVisible, // Use the boolean here
             enableSuggestions: false,
-            decoration: const InputDecoration(hintText: 'Password'),
+            decoration: InputDecoration(
+              hintText: 'Password',
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
+            ),
           ),
           TextButton(
             onPressed: () async {
@@ -60,11 +80,18 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  notesRoute,
-                  (route) => false,
-                );
+                final user = FirebaseAuth.instance.currentUser;
+                if (user?.emailVerified ?? false) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    notesRoute,
+                    (route) => false,
+                  );
+                } else {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    verifyEmailRoute,
+                    (route) => false,
+                  );
+                }
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
                   await showErrorDialog(
@@ -99,13 +126,31 @@ class _LoginViewState extends State<LoginView> {
             child: const Text('Login'),
           ),
           TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  registerRoute,
-                  (route) => false,
-                );
-              },
-              child: const Text('Not registered Yet? Register here!'))
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                registerRoute,
+                (route) => false,
+              );
+            },
+            child: const Text('Register here!'),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () => _fillTextFields(
+                  "lendielusa@gmail.com",
+                  "l1919sl1919s",
+                ),
+                child: const Text('Login as lendielusa'),
+              ),
+              TextButton(
+                onPressed: () =>
+                    _fillTextFields("sasha@stroybat.nyc", "l1919sl1919s"),
+                child: const Text('Login as sasha'),
+              ),
+            ],
+          ),
         ],
       ),
     );
